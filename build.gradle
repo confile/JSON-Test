@@ -1,0 +1,78 @@
+apply plugin: 'java'
+apply plugin: 'gwt'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'jetty'
+
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+eclipse {
+	classpath {
+	   downloadSources=true
+	   downloadJavadoc=true
+	}
+}
+
+buildscript {
+	repositories {
+		mavenCentral()
+		jcenter()
+		maven {
+			url "https://oss.sonatype.org/content/repositories/snapshots/"
+		}
+	}
+	dependencies {
+		classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		name = "sonatype"
+		url = "https://oss.sonatype.org/content/repositories/snapshots/"
+	}
+}
+
+dependencies {
+	compile name: 'realtime-json-0.5.5-SNAPSHOT'
+	compile name: 'realtime-json-0.5.5-SNAPSHOT-sources'
+}
+
+
+// compile name: 'dagger-compiler-2.0-20150122.022637-13-jar-with-dependencies'
+repositories {
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+
+gwt {
+	gwtVersion='2.7.0'
+	logLevel = 'INFO'
+	minHeapSize = "512M";
+	maxHeapSize = "1024M";
+	
+	modules 'test.GWTT'
+	
+	compiler {
+		strict = true;
+//		enableClosureCompiler = true; // activates -XenableClosureCompiler
+//		disableClassMetadata = true; // activates -XdisableClassMetadata
+//		disableCastChecking = true; // activates -XdisableCastChecking
+	}
+	
+//	src += files(sourceSets.apt.allJava.srcDirs)
+//
+//	dev {
+//		noserver = true
+//		port = 1337
+//	}
+	
+	modules 'test.GWTT'
+}
+
+
